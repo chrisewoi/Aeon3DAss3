@@ -19,6 +19,7 @@ public class CameraSelector : MonoBehaviour
     //Hold our third person camera script
     private ThirdPersonCamera thirdPersonCamera;
 
+    private Camera currentCamera;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,10 +50,12 @@ public class CameraSelector : MonoBehaviour
         {
             case Selection.FirstPerson:
                 firstPersonCamera.ToggleActive(true);
+                currentCamera = firstPersonCamera.GetComponentInChildren<Camera>();
                 thirdPersonCamera.ToggleActive(false);
                 break;
             case Selection.ThirdPerson:
                 thirdPersonCamera.ToggleActive(true);
+                currentCamera = thirdPersonCamera.GetComponentInChildren<Camera>();
                 firstPersonCamera.ToggleActive(false);
                 break;
         }
@@ -83,5 +86,14 @@ public class CameraSelector : MonoBehaviour
             default:
                 return null;
         }
+    }
+    
+    /// <summary>
+    /// Returns the camera which is currently in use.
+    /// </summary>
+    /// <returns></returns>
+    public Camera GetCamera()
+    {
+        return currentCamera;
     }
 }
